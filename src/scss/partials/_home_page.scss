@@ -1,0 +1,12 @@
+.home-main {
+
+    &__intro {
+        height: calc(100vh - 56px);
+        background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,1)), url("../images/manhattan_img.jpg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+
+    
+}

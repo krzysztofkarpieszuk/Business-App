@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
-import HomePage from './components/pages/Index';
+import Footer from './components/layout/Footer';
+import HomePage from './components/pages/HomePage';
 
 class App extends Component {
 	render() {
@@ -12,6 +13,7 @@ class App extends Component {
 					<Switch>
 						<Route exact to="/" component={HomePage} />
 					</Switch>
+					<Footer />
 				</div>
 			</Router>
 		);

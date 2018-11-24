@@ -1,20 +1,20 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Navbar = () => {
 	return (
-		<header className="app-header">
-			<nav className="app-header__nav navbar navbar-expand-md navbar-dark bg-dark">
+		<header className="app-header sticky-top">
+			<nav className="app-header__nav navbar navbar-expand-md navbar-dark bg-info">
 				<div className="container">
-					<Link to="/" className="navbar-brand">
+					<Link to="/" className="app-header__nav-brand navbar-brand">
 						Businesstry
 					</Link>
                     <button
-					className="navbar-toggler"
+					className="app-header__toggler navbar-toggler"
 					type="button"
 					data-toggle="collapse"
-					data-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent"
+					data-target="#navbarNavigationDropdown"
+					aria-controls="navbarNavigationDropdown"
 					aria-expanded="false"
 					aria-label="Toggle navigation"
 				>
@@ -31,25 +31,25 @@ const Navbar = () => {
 
 const Menu = () => {
     return (
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav ml-auto">
-                <li className="nav-item active">
-                    <Link to="/" className="nav-link">Home</Link>
+        <div className="collapse navbar-collapse" id="navbarNavigationDropdown">
+            <ul className="app-header__nav-list navbar-nav">
+                <li className="app-header__nav-item nav-item">
+                    <NavLink exact to="/" className="nav-link">Home</NavLink>
                 </li>
-                <li className="nav-item">
-                    <Link to="/currency" className="nav-link">Currency</Link>
+                <li className="app-header__nav-item nav-item">
+                    <NavLink to="/currency" activeClassName="active" className="nav-link app-header__nav-link">Currency</NavLink>
                 </li>
-                <li className="nav-item">
-                    <Link to="/crypto" className="nav-link">Crypto</Link>
+                <li className="app-header__nav-item nav-item">
+                    <NavLink to="/crypto" activeClassName="active" className="nav-link app-header__nav-link">Crypto</NavLink>
                 </li>
-                <li className="nav-item">
-                    <Link to="/market" className="nav-link">Stock</Link>
+                <li className="app-header__nav-item nav-item">
+                    <NavLink to="/market" activeClassName="active" className="nav-link app-header__nav-link">Stock</NavLink>
                 </li>
-                <li className="nav-item">
-                    <Link to="/news" className="nav-link">News</Link>
+                <li className="app-header__nav-item nav-item">
+                    <NavLink to="/news" activeClassName="active" className="nav-link app-header__nav-link">News</NavLink>
                 </li>
-                <li className="nav-item">
-                    <Link to="/weather" className="nav-link">Weather</Link>
+                <li className="app-header__nav-item nav-item">
+                    <NavLink to="/weather" activeClassName="active" className="nav-link app-header__nav-link">Weather</NavLink>
                 </li>
             </ul>
         </div>
