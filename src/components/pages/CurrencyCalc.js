@@ -40,7 +40,7 @@ const CurrencyPage = (props) => {
 	return (
 			<main className="currency-main">
 				<CurrencyPageIntro />
-				<CurrencyCalculator baseCurr={props.baseCurr} quoteCurr={props.quoteCurr} onBaseCurrencySelect={props.onBaseCurrencySelect} onQuoteCurrencySelect={props.onQuoteCurrencySelect} onCurrencyInputChange={props.onCurrencyInputChange} convertedValue={props.convertedValue} displayValueBox={props.displayValueBox} rates={props.rates} baseCurrencyValue={props.baseCurrencyValue} rate={props.rate}  />
+				<CurrencyCalculator {...props}/>
 			</main>
 		);
 }
@@ -63,10 +63,10 @@ class CurrencyCalculator extends React.Component {
 	render() {
 		const { baseCurr, quoteCurr, onBaseCurrencySelect, onQuoteCurrencySelect, onCurrencyInputChange, convertedValue, displayValueBox, rates, baseCurrencyValue, rate } = this.props;
 
-		const currency = currencies.map((e, i) => {
+		const currency = currencies.map((element, i) => {
 			return (
-				<option value={e} key={e}>
-					{e}
+				<option value={element} key={element}>
+					{element}
 				</option>
 			);
 		});
@@ -98,7 +98,7 @@ class CurrencyCalculator extends React.Component {
 							</select>
 						</div>
 					</div>
-					<CurrencyValues displayValueBox={displayValueBox} rates={rates} baseCurr={baseCurr} quoteCurr={quoteCurr} onCurrencyInputChange={onCurrencyInputChange} convertedValue={convertedValue} baseCurrencyValue={baseCurrencyValue} rate={rate} />
+					<CurrencyValues {...this.props}/>
 				</div>
 			</div>
 		);
@@ -112,7 +112,7 @@ class CurrencyValues extends React.Component {
 
 	render() {
 		const { displayValueBox, rates, baseCurr, quoteCurr, onCurrencyInputChange, convertedValue, baseCurrencyValue, rate } = this.props;
-		console.log("baseCurr", baseCurr, "rates", rates, "baseCurrencyValue", baseCurrencyValue, "rate", rate, "quoteCurr", quoteCurr, "convertedValue", convertedValue)
+
 
 		if (displayValueBox === 'none' && quoteCurr !== "" && baseCurr !== "" && rates !== [] ) {
 			return null;
@@ -136,7 +136,13 @@ class CurrencyValues extends React.Component {
 
 					<div className="col-8 col-sm-5 mt-2">
 						<p className="h2 text-center">
-							{convertedValue} {quoteCurr}
+							{convertedValue === "NaN" ? `${baseCurrencyValue}.00` : convertedValue} {quoteCurr}
+						</p>
+					</div>
+
+					<div className="col-8 col-sm-6 mt-2">
+						<p className="lead">
+							Exchange rate: <span className="h5">{rate}</span>
 						</p>
 					</div>
 

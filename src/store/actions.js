@@ -11,33 +11,27 @@ export const SET_RATE = 'SET_RATE';
 
 
 export const selectBaseCurrency = (baseCurrency, baseValue, rates, quoteCurrency, rate) => {
-    return (dispatch, getState) => {
-        dispatch(fetchRates(baseCurrency));
-        const firstStateUpdate = getState()
-        dispatch(setRate(firstStateUpdate.calculator.rates, quoteCurrency));
+    return async (dispatch, getState) => {
+        await dispatch(fetchRates(baseCurrency));
+        dispatch(setRate(getState().calculator.rates, quoteCurrency));
 
-        const updatedState = getState()
-        console.log("updatedState",updatedState.calculator.rate)
-        dispatch(calculateCurrency(baseValue, updatedState.calculator.rate))
+        dispatch(calculateCurrency(baseValue, getState().calculator.rate))
     }
 }
 
-const setQuoteCurrency = (quote, rates) => {
+const setQuoteCurrency = (quote) => {
     return {
         type: SELECT_QUOTE_CURRENCY,
         quoteCurrency: quote
-        // rate: rates[quote]
     }
 }
 
 export const selectQuoteCurrency = (quoteCurrency, baseValue, rate, rates) => {
     return (dispatch, getState) => {
-        dispatch(setQuoteCurrency(quoteCurrency, rates));
+        dispatch(setQuoteCurrency(quoteCurrency));
         dispatch(setRate(rates, quoteCurrency))
 
-        const updatedState = getState();
-        console.log("updatedState",updatedState.calculator.rate)
-        dispatch(calculateCurrency(baseValue, updatedState.calculator.rate))
+        dispatch(calculateCurrency(baseValue, getState().calculator.rate))
     }
 }
 

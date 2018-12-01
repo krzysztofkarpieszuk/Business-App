@@ -23,7 +23,7 @@ const HomeMainIntro = () => {
 					Welcome <span className="text-info"> to </span> Businesstry
 				</h1>
 				<h5 className="font-weight-light text-white text-center mt-2">
-					Business app to help you always stay up to date
+					Business app which helps you stay always up to date
 				</h5>
 				<button className="btn btn-outline-info btn-lg mt-3"> Learn More </button>
 			</div>
