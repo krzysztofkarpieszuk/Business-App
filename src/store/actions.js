@@ -7,7 +7,7 @@ export const SELECT_BASE_CURRENCY = 'SELECT_BASE_CURRENCY';
 export const SELECT_QUOTE_CURRENCY = 'SELECT_QUOTE_CURRENCY';
 export const SET_BASE_CURRENCY_VALUE = 'SET_BASE_CURRENCY_VALUE';
 export const SET_RATE = 'SET_RATE';
-
+export const SWAP_CURRENCIES = 'SWAP_CURRENCIES';
 
 
 export const selectBaseCurrency = (baseCurrency, baseValue, rates, quoteCurrency, rate) => {
@@ -17,6 +17,13 @@ export const selectBaseCurrency = (baseCurrency, baseValue, rates, quoteCurrency
 
         dispatch(calculateCurrency(baseValue, getState().calculator.rate))
     }
+}
+
+export const swapCurrencies = (baseCurrency, baseValue, rates, quoteCurrency, rate) => {
+   return dispatch => {
+       dispatch(setQuoteCurrency(baseCurrency))
+        dispatch(selectBaseCurrency(quoteCurrency, baseValue, rates, baseCurrency, rate));
+   }
 }
 
 const setQuoteCurrency = (quote) => {

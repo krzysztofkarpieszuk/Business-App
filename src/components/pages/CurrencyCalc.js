@@ -1,40 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
+import {currencies, currenciesNames} from '../../currencies';
 
-const currencies = [
-	'PLN',
-	'EUR',
-	'USD',
-	'GBP',
-	'CHF',
-	'JPY',
-	'DKK',
-	'BGN',
-	'CAD',
-	'BRL',
-	'HUF',
-	'NOK',
-	'AUD',
-	'ZAR',
-	'CNY',
-	'RUB',
-	'SEK',
-	'PHP',
-	'NZD',
-	'SGD',
-	'HRK',
-	'CZK',
-	'INR',
-	'RON',
-	'MYR',
-	'ISK',
-	'ILS',
-	'MXN',
-	'IDR',
-	'HKD',
-	'THB'
-];
+
+
 
 const CurrencyPage = (props) => {
 	return (
@@ -47,7 +17,7 @@ const CurrencyPage = (props) => {
 
 const CurrencyPageIntro = () => {
 	return (
-		<section className="currency-main__intro py-4">
+		<section className="currency-main__intro pt-3 pt-md-4">
 			<div className="container">
 				<h2 className="text-center">Currency Calculator</h2>
 			</div>
@@ -61,21 +31,23 @@ class CurrencyCalculator extends React.Component {
 	}
 
 	render() {
-		const { baseCurr, quoteCurr, onBaseCurrencySelect, onQuoteCurrencySelect, onCurrencyInputChange, convertedValue, displayValueBox, rates, baseCurrencyValue, rate } = this.props;
+		const { baseCurr, quoteCurr, onBaseCurrencySelect, onQuoteCurrencySelect, onChangeButtonClick, rates, baseCurrencyValue, rate } = this.props;
 
-		const currency = currencies.map((element, i) => {
+		const currency = currencies.map((element, index) => {
 			return (
-				<option value={element} key={element}>
-					{element}
+				<option value={element} key={`${element}${index}`}>
+					{currenciesNames[index]}
 				</option>
 			);
 		});
 
+
+
 		return (
 			<div className="currency-main__calculator">
 				<div className="container">
-					<div className="row">
-						<div className="col-sm-6">
+					<div className="row no-gutters">
+						<div className="col-sm-5">
 							<select
 								className="form-control mt-4"
 								id="base-currency"
@@ -86,7 +58,14 @@ class CurrencyCalculator extends React.Component {
 								{currency}
 							</select>
 						</div>
-						<div className="col-sm-6">
+
+						<div className="offset-5 offset-sm-0 col-2 mt-4 d-flex justify-content-center">
+							<button className="btn btn-info" onClick={() => onChangeButtonClick(baseCurr, baseCurrencyValue, rates, quoteCurr, rate)}>
+								<i className="fas fa-fw fa-exchange-alt" title="Swap currencies"></i>
+							</button>
+						</div>
+
+						<div className="col-sm-5">
 							<select
 								className="form-control mt-4"
 								id="quote-currency"
@@ -113,12 +92,13 @@ class CurrencyValues extends React.Component {
 	render() {
 		const { displayValueBox, rates, baseCurr, quoteCurr, onCurrencyInputChange, convertedValue, baseCurrencyValue, rate } = this.props;
 
+		const visibleValues = displayValueBox ? "visible" : "";
 
-		if (displayValueBox === 'none' && quoteCurr !== "" && baseCurr !== "" && rates !== [] ) {
+		if (!displayValueBox && quoteCurr !== "" && baseCurr !== "" && rates !== [] ) {
 			return null;
 		} else {
 			return (
-				<div className="row mt-4" style={{ display: displayValueBox }}>
+				<div className={`currency-main__calculator-value row mt-4 ${visibleValues}`}>
 					<div className="col-8 col-sm-6 mt-2 d-flex align-items-center">
 						<div className="input-group">
 							<input
@@ -168,7 +148,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onBaseCurrencySelect: (baseCurrency, baseValue, rates, quoteCurrency, rate) => dispatch(actionCreators.selectBaseCurrency(baseCurrency, baseValue, rates, quoteCurrency, rate)),
 		onQuoteCurrencySelect: (quoteCurrency, baseValue, rate, rates) => dispatch(actionCreators.selectQuoteCurrency(quoteCurrency, baseValue, rate, rates)),
-		onCurrencyInputChange: (inputValue, rate) => dispatch(actionCreators.handleInputChange(inputValue, rate))
+		onCurrencyInputChange: (inputValue, rate) => dispatch(actionCreators.handleInputChange(inputValue, rate)),
+		onChangeButtonClick: (baseCurrency, baseValue, rates, quoteCurrency, rate) => dispatch(actionCreators.swapCurrencies(baseCurrency, baseValue, rates, quoteCurrency, rate))
 	}
 }
 

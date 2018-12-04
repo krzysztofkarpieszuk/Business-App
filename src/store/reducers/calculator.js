@@ -7,7 +7,7 @@ const initialState = {
     baseCurrency: "",
     quoteCurrency: "",
     convertedValue: 0,
-    displayValueBox: "none"
+    displayValueBox: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 quoteCurrency: action.quoteCurrency,
                 rate: action.rate,
-                displayValueBox: "flex"
+                displayValueBox: true
             }
 
         case actionTypes.RECEIVE_RATES: {
