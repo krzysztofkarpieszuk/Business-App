@@ -52,7 +52,7 @@ class CurrencyCalculator extends React.Component {
 								className="form-control mt-4"
 								id="base-currency"
 								value={baseCurr}
-								onChange={(event) => onBaseCurrencySelect(event.target.value, baseCurrencyValue, rates, quoteCurr, rate)}
+								onChange={(event) => onBaseCurrencySelect(event.target.value, baseCurrencyValue, quoteCurr)}
 							>
 								<option value="">Select base currency</option>
 								{currency}
@@ -60,7 +60,7 @@ class CurrencyCalculator extends React.Component {
 						</div>
 
 						<div className="offset-5 offset-sm-0 col-2 mt-4 d-flex justify-content-center">
-							<button className="btn btn-info" onClick={() => onChangeButtonClick(baseCurr, baseCurrencyValue, rates, quoteCurr, rate)}>
+							<button className="btn btn-info" onClick={() => onChangeButtonClick(baseCurr, baseCurrencyValue, quoteCurr)}>
 								<i className="fas fa-fw fa-exchange-alt" title="Swap currencies"></i>
 							</button>
 						</div>
@@ -70,7 +70,7 @@ class CurrencyCalculator extends React.Component {
 								className="form-control mt-4"
 								id="quote-currency"
 								value={quoteCurr}
-								onChange={(event) => onQuoteCurrencySelect(event.target.value, baseCurrencyValue, rate, rates)}
+								onChange={(event) => onQuoteCurrencySelect(event.target.value, baseCurrencyValue, rates)}
 							>
 								<option value="">Select quote currency</option>
 								{currency}
@@ -146,10 +146,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onBaseCurrencySelect: (baseCurrency, baseValue, rates, quoteCurrency, rate) => dispatch(actionCreators.selectBaseCurrency(baseCurrency, baseValue, rates, quoteCurrency, rate)),
-		onQuoteCurrencySelect: (quoteCurrency, baseValue, rate, rates) => dispatch(actionCreators.selectQuoteCurrency(quoteCurrency, baseValue, rate, rates)),
+		onBaseCurrencySelect: (baseCurrency, baseValue, quoteCurrency) => dispatch(actionCreators.selectBaseCurrency(baseCurrency, baseValue, quoteCurrency)),
+		onQuoteCurrencySelect: (quoteCurrency, baseValue, rates) => dispatch(actionCreators.selectQuoteCurrency(quoteCurrency, baseValue, rates)),
 		onCurrencyInputChange: (inputValue, rate) => dispatch(actionCreators.handleInputChange(inputValue, rate)),
-		onChangeButtonClick: (baseCurrency, baseValue, rates, quoteCurrency, rate) => dispatch(actionCreators.swapCurrencies(baseCurrency, baseValue, rates, quoteCurrency, rate))
+		onChangeButtonClick: (baseCurrency, baseValue, quoteCurrency) => dispatch(actionCreators.swapCurrencies(baseCurrency, baseValue, quoteCurrency))
 	}
 }
 
