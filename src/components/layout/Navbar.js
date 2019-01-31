@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-const Navbar = () => {
+function Navbar() {
 	return (
 		<header className="app-header sticky-top">
 			<nav className="app-header__nav navbar navbar-expand-md navbar-dark bg-info">
@@ -9,27 +9,23 @@ const Navbar = () => {
 					<Link to="/" className="app-header__nav-brand navbar-brand">
 						Businesstry
 					</Link>
-                    <button
-					className="app-header__toggler navbar-toggler"
-					type="button"
-					data-toggle="collapse"
-					data-target="#navbarNavigationDropdown"
-					aria-controls="navbarNavigationDropdown"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon" />
-				</button>
-                <Menu />
+                    <button className="app-header__toggler navbar-toggler"
+                            type="button"
+                            data-toggle="collapse"
+                            data-target="#navbarNavigationDropdown"
+                            aria-controls="navbarNavigationDropdown"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation">
+					    <span className="navbar-toggler-icon" />
+                    </button>
+                    <Menu />
 				</div>
-
-
 			</nav>
 		</header>
 	);
 };
 
-const Menu = () => {
+function Menu() {
     return (
         <div className="collapse navbar-collapse" id="navbarNavigationDropdown">
             <ul className="app-header__nav-list navbar-nav">

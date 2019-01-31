@@ -1,12 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../../store/actions';
-import {currencies, currenciesNames} from '../../currencies';
+import {currencies} from '../../currencies';
 
 
-
-
-const CurrencyPage = (props) => {
+function CurrencyPage(props) {
 	return (
 			<main className="currency-main">
 				<CurrencyPageIntro />
@@ -15,7 +13,7 @@ const CurrencyPage = (props) => {
 		);
 }
 
-const CurrencyPageIntro = () => {
+function CurrencyPageIntro() {
 	return (
 		<section className="currency-main__intro pt-3 pt-md-4">
 			<div className="container">
@@ -25,37 +23,36 @@ const CurrencyPageIntro = () => {
 	);
 };
 
-class CurrencyCalculator extends React.Component {
-	constructor(props) {
-		super(props);
-	}
+function CurrencyCalculator(props) {
+	const {
+		baseCurr,
+		quoteCurr,
+		onBaseCurrencySelect,
+		onQuoteCurrencySelect,
+		rates,
+		baseCurrencyValue,
+		onChangeButtonClick
+	} = props;
 
-	render() {
-		const { baseCurr, quoteCurr, onBaseCurrencySelect, onQuoteCurrencySelect, onChangeButtonClick, rates, baseCurrencyValue, rate } = this.props;
-
-		const currency = currencies.map((element, index) => {
-			return (
-				<option value={element} key={`${element}${index}`}>
-					{currenciesNames[index]}
-				</option>
-			);
-		});
-
-
-
+	const currencyOption = currencies.map(currency => {
 		return (
-			<div className="currency-main__calculator">
+			<option value={currency.code} key={currency.code} title={currency.code}>
+				{currency.name}
+			</option>
+		);
+	});
+
+	return (
+		<div className="currency-main__calculator">
 				<div className="container">
 					<div className="row no-gutters">
 						<div className="col-sm-5">
-							<select
-								className="form-control mt-4"
-								id="base-currency"
-								value={baseCurr}
-								onChange={(event) => onBaseCurrencySelect(event.target.value, baseCurrencyValue, quoteCurr)}
-							>
+							<select className="form-control mt-4"
+									id="base-currency"
+									value={baseCurr}
+									onChange={(event) => onBaseCurrencySelect(event.target.value, baseCurrencyValue, quoteCurr)}>
 								<option value="">Select base currency</option>
-								{currency}
+								{currencyOption}
 							</select>
 						</div>
 
@@ -66,70 +63,67 @@ class CurrencyCalculator extends React.Component {
 						</div>
 
 						<div className="col-sm-5">
-							<select
-								className="form-control mt-4"
-								id="quote-currency"
-								value={quoteCurr}
-								onChange={(event) => onQuoteCurrencySelect(event.target.value, baseCurrencyValue, rates)}
-							>
+							<select className="form-control mt-4"
+									id="quote-currency"
+									value={quoteCurr}
+									onChange={(event) => onQuoteCurrencySelect(event.target.value, baseCurrencyValue, rates)}>
 								<option value="">Select quote currency</option>
-								{currency}
+								{currencyOption}
 							</select>
 						</div>
 					</div>
-					<CurrencyValues {...this.props}/>
+					<CurrencyValues {...props}/>
 				</div>
 			</div>
-		);
-	}
+	)
 }
 
-class CurrencyValues extends React.Component {
-	constructor(props) {
-		super(props);
+function CurrencyValues(props) {
+	const {
+		displayValueBox,
+		rates,
+		baseCurr,
+		quoteCurr,
+		onCurrencyInputChange,
+		convertedValue,
+		baseCurrencyValue,
+		rate
+	} = props;
+
+	const visibleValues = displayValueBox ? "visible" : "";
+
+	if ((displayValueBox === 'none') && (quoteCurr !== "") && (baseCurr !== "") && (rates !== [])) {
+		return null;
 	}
 
-	render() {
-		const { displayValueBox, rates, baseCurr, quoteCurr, onCurrencyInputChange, convertedValue, baseCurrencyValue, rate } = this.props;
-
-		const visibleValues = displayValueBox ? "visible" : "";
-
-		if (!displayValueBox && quoteCurr !== "" && baseCurr !== "" && rates !== [] ) {
-			return null;
-		} else {
-			return (
-				<div className={`currency-main__calculator-value row mt-4 ${visibleValues}`}>
-					<div className="col-8 col-sm-6 mt-2 d-flex align-items-center">
-						<div className="input-group">
-							<input
-								type="number"
-								defaultValue={0}
-								step="1"
-								className="form-control"
-								onChange={(event) => onCurrencyInputChange(event.target.value, rate )}
-							/>
-							<div className="input-group-append">
-								<div className="input-group-text">{baseCurr}</div>
-							</div>
-						</div>
+	return (
+		<div className={`currency-main__calculator-value row mt-4 ${visibleValues}`}>
+			<div className="col-8 col-sm-6 mt-2 d-flex align-items-center">
+				<div className="input-group">
+					<input type="number"
+						   defaultValue={0}
+						   step="1"
+						   className="form-control"
+						   onChange={(event) => onCurrencyInputChange(event.target.value, rate )}/>
+					<div className="input-group-append">
+						<div className="input-group-text">{baseCurr}</div>
 					</div>
-
-					<div className="col-8 col-sm-5 mt-2">
-						<p className="h2 text-center">
-							{convertedValue === "NaN" ? `${baseCurrencyValue}.00` : convertedValue} {quoteCurr}
-						</p>
-					</div>
-
-					<div className="col-8 col-sm-6 mt-2">
-						<p className="lead">
-							Exchange rate: <span className="h5">{rate}</span>
-						</p>
-					</div>
-
 				</div>
-			);
-		}
-	}
+			</div>
+
+			<div className="col-8 col-sm-5 mt-2">
+				<p className="h2 text-center">
+					{convertedValue === "NaN" ? `${baseCurrencyValue}.00` : convertedValue} {quoteCurr}
+				</p>
+			</div>
+
+			<div className="col-8 col-sm-6 mt-2">
+				<p className="lead">
+					Exchange rate: <span className="h5">{rate}</span>
+				</p>
+			</div>
+		</div>
+	);
 }
 
 const mapStateToProps = (state) => {

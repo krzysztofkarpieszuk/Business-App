@@ -15,8 +15,6 @@ const rootReducer = combineReducers({
     calculator: calculatorReducer
 })
 
-
-
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
